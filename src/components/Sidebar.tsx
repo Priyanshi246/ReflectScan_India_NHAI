@@ -10,6 +10,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { Page } from '../types';
+import { supabase } from '../lib/supabase';
 
 interface SidebarProps {
   currentPage: Page;
@@ -76,7 +77,10 @@ export default function Sidebar({ currentPage, onNavigate, alertCount }: Sidebar
           <p className="text-white text-sm font-medium">NHAI Officer</p>
           <p className="text-slate-400 text-xs">admin@nhai.gov.in</p>
         </div>
-        <button className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-400 hover:text-red-400 text-sm rounded-lg hover:bg-red-500/10 transition-colors">
+        <button onClick={async () => {
+          await supabase.auth.signOut();
+          window.location.reload();
+        }} className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-400 hover:text-red-400 text-sm rounded-lg hover:bg-red-500/10 transition-colors">
           <LogOut className="w-4 h-4" />
           Sign Out
         </button>
